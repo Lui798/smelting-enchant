@@ -1,0 +1,9 @@
+main: novamc.smeltingenchant.Main
+name: SmeltingEnchant
+author: NovaMC
+version: 1.0-SNAPSHOT
+api-version: 1.14
+website: https://github.com/NovaMC
+commands:
+  smelting:
+    description: smelting commands
