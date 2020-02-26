@@ -1,5 +1,6 @@
 package novamc.smeltingenchant;
 
+import novamc.smeltingenchant.enchant.EnchantSetup;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -13,5 +14,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        EnchantSetup.registerEnchantment(EnchantSetup.SMELTING);
     }
 }
