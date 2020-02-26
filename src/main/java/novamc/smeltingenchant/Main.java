@@ -1,6 +1,8 @@
 package novamc.smeltingenchant;
 
+import novamc.smeltingenchant.command.SmeltingCommand;
 import novamc.smeltingenchant.enchant.EnchantSetup;
+import novamc.smeltingenchant.enchant.wrapper.SmeltingWrapper;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -15,6 +17,10 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        EnchantSetup.registerEnchantment(EnchantSetup.SMELTING);
+        SmeltingCommand smeltingCommand = new SmeltingCommand();
+        this.getCommand("smelting").setExecutor(smeltingCommand);
+
+        EnchantSetup enchantSetup = new EnchantSetup(this);
+        this.getServer().getPluginManager().registerEvents((SmeltingWrapper) enchantSetup.getCustomEnchant("smelting"), this);
     }
 }

@@ -1,6 +1,5 @@
 package novamc.smeltingenchant.enchant.wrapper;
 
-import novamc.smeltingenchant.enchant.EnchantSetup;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,13 +12,16 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 public class SmeltingWrapper extends CustomEnchantWrapper implements Listener {
 
-    public SmeltingWrapper() {
-        super("smelting");
+    public SmeltingWrapper(Plugin plugin) {
+        super("smelting", plugin);
     }
 
     @Override
@@ -29,17 +31,17 @@ public class SmeltingWrapper extends CustomEnchantWrapper implements Listener {
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getStartLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
     public EnchantmentTarget getItemTarget() {
-        return null;
+        return EnchantmentTarget.TOOL;
     }
 
     @Override
@@ -54,27 +56,16 @@ public class SmeltingWrapper extends CustomEnchantWrapper implements Listener {
 
     @Override
     public boolean conflictsWith(Enchantment other) {
-        //return other != Enchantment.SILK_TOUCH && other != Enchantment.LOOT_BONUS_BLOCKS;
-        return false;
+        return other == Enchantment.SILK_TOUCH || other == Enchantment.LOOT_BONUS_BLOCKS;
     }
 
     @Override
     public boolean canEnchantItem(ItemStack item) {
-//        boolean isCompatible = false;
-
-//        List<Material> compatibleTools = Arrays.asList(Material.DIAMOND_AXE, Material.DIAMOND_PICKAXE, Material.DIAMOND_SHOVEL,
-//                Material.GOLDEN_AXE, Material.GOLDEN_PICKAXE, Material.GOLDEN_SHOVEL,
-//                Material.IRON_AXE, Material.IRON_PICKAXE, Material.IRON_SHOVEL,
-//                Material.STONE_AXE, Material.STONE_PICKAXE, Material.STONE_SHOVEL,
-//                Material.WOODEN_AXE, Material.WOODEN_PICKAXE, Material.WOODEN_SHOVEL);
-//
-//        for (Material material : compatibleTools) {
-//            if (item.equals(new ItemStack(material))) {
-//                isCompatible = true;
-//            }
-//        }
-
-//        return isCompatible;
+        if (EnchantmentTarget.TOOL.includes(item)) {
+            if (!item.containsEnchantment(Enchantment.SILK_TOUCH) && !item.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                return true;
+            }
+        }
         return false;
     }
 
